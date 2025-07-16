@@ -1,0 +1,269 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+}
+
+.header-left h1 {
+    margin: 0;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 40px; /* Adjust space between elements */
+    margin-left: auto; /* Pushes the right section to the far right */
+}
+
+.header-right .login-icon {
+    font-size: 2em;
+    color: white;
+    margin-top: 40px;
+}
+
+.contact-us {
+    color: white;
+    text-decoration: none;
+    margin-right: 70px;
+}
+
+.user-options {
+    position: relative;
+    margin-right: 20px;
+    top: 2px;
+}
+
+.user-options .username {
+    cursor: pointer;
+    color: white;
+    margin-right: 1px;
+    margin-left: 100px;
+    top: 80px;
+}
+
+.user-options .dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    color: black;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.user-options .dropdown a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.user-options .dropdown a:hover {
+    background-color: #ddd;
+}
+
+.user-options:hover .dropdown {
+    display: block;
+}
+
+/* Flexbox wrapper for sidebar and main content */
+.dashboard-wrapper {
+    display: flex;
+    min-height: 100vh; /* Make wrapper span full viewport height */
+
+}
+
+/* Sidebar styling */
+.sidebar {
+    width: 250px;
+    background-color: #333;
+    flex-shrink: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 20px 0;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    background-color: #444;
+    border-radius: 4px;
+}
+
+.sidebar ul li a:hover, .sidebar ul li a.active {
+    background-color: black;
+}
+
+/* Main content styling */
+.main-content {
+    flex-grow: 1;
+    padding: 40px;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+    min-height: 100vh; /* Match sidebar height */
+
+}
+
+.section-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.content-section {
+    display: none;
+}
+
+/* Sample form and table styling */
+.info-form, .address-form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-form label, .address-form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.info-form input, .address-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.info-form button, .address-form button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.info-form button:hover, .address-form button:hover {
+    background-color: #45a049;
+}
+.content-section { display: none; }
+
+/* Buttons styling */
+.order-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.view-order-btn, .cancel-order-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.view-order-btn {
+    background-color: #f0ad4e;  /* Yellow color */
+    color: white;
+}
+
+.view-order-btn:hover {
+    background-color: #ec971f;
+}
+
+.cancel-order-btn {
+    background-color: #d9534f;  /* Red color */
+    color: white;
+}
+
+.cancel-order-btn:hover {
+    background-color: #c9302c;
+}
+
+.header-left a {
+    color: inherit; /* Inherit the color from the parent element */
+    text-decoration: none;
+
+}
+
+.order-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 20px;
+    margin-bottom: 30px;
+    transition: all 0.3s ease;
+}
+
+.order-details {
+    margin-top: 15px;
+}
+
+.hidden {
+    display: none;
+}
+
+.disabled-button {
+    background-color: #aaa;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.toast-popup {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    font-weight: bold;
+    z-index: 1000;
+    animation: fadeSlideUp 3s ease-in-out forwards;
+    /* forwards keeps final state of animation */
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+}
+
+@keyframes fadeSlideUp {
+    0%   { opacity: 0; transform: translateY(20px); visibility: visible; }
+    10%  { opacity: 1; transform: translateY(0); }
+    90%  { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-20px); visibility: hidden; }
+}
+
+.text-danger {
+    color: #dc3545; /* Bootstrap's danger red */
+}
+
+.small {
+    font-size: 85%;
+}

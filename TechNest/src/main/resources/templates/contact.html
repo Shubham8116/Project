@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechNest - Contact Us</title>
+    <link rel="stylesheet" href="/css/contact.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!--    <script src="/js/cart.js" defer></script>-->
+</head>
+<body>
+<header>
+    <div class="header-left">
+       <a href="/"> <h1>TechNest</h1></a>
+    </div>
+    <div class="header-right">
+        <div sec:authorize="isAnonymous()">
+            <a href="/login">
+                <span class="login-icon"></span>
+            </a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <div sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{/admin}">
+                    <span class="show-dashboard-options" sec:authentication="name"></span>
+                </a>
+            </div>
+            <div sec:authorize="hasRole('USER')">
+                <div class="user-options">
+                    <span class="username" sec:authentication="name"></span>
+                    <div class="dropdown">
+                        <a th:href="@{/user}">User Dashboard</a>
+                        <a th:href="@{/logout}">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!--        <a href="/contact-us" class="contact-us"><h4>Contact Us</h4></a>-->
+    </div>
+    <div class="clock" id="clock"></div>
+</header>
+
+<div class="contact-container">
+    <h2>Contact Us</h2>
+    <p class="contact-tagline"><strong>We'd love to hear from you</strong></p>
+    <p class="contact-subtagline">Whether you have a question about features, pricing, orders, or anything else, our team is ready to answer all your questions.</p>
+
+    <table class="contact-table" border="0" width="100%">
+        <tr>
+            <td align="center"><h3>Call Us</h3></td>
+            <td align="center"><h3>Write To Us</h3></td>
+        </tr>
+        <tr>
+            <td align="center"><p>Get the support you need<br>1800-000-0000 | 1800-123-4567</p></td>
+            <td align="center"><p>For any queries related to orders, information<br>write to us at: helpdesk@technest.com</p></td>
+        </tr>
+        <tr>
+            <td align="center"><h3>Our Corporate Office</h3></td>
+            <td align="center"><h3>For Feedback</h3></td>
+        </tr>
+        <tr>
+            <td align="center"><p>Corporate Communications, TechNest India Limited,<br>1, Sakkardara Road, Reshimbaugh, New Nagpur, India<br>corp.comm@technest.com +91-9112361742</p></td>
+            <td align="center"><p>We would like to hear from you<br>feedback@technest.com</p></td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // Clock functionality with day and month
+        function updateClock() {
+            const now = new Date();
+
+            const day = now.getDate().toString().padStart(2, '0');
+            const month = now.toLocaleString('default', { month: 'long' }); // e.g., "July"
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+
+            const formatted = `${day} ${month} | ${hours}:${minutes}:${seconds}`;
+            $('#clock').text(formatted);
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    });
+</script>
+</body>
+</html>

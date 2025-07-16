@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechNest - Sign Up</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<header class="bg-black text-white py-3 mb-4">
+    <div class="container text-center">
+        <h1><a th:href="@{/}" class="text-white text-decoration-none">TechNest</a></h1>
+    </div>
+</header>
+
+<main class="container">
+    <div class="card mx-auto shadow" style="max-width: 600px;">
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">Sign Up</h2>
+
+            <form th:action="@{/register}" th:object="${users}" method="post" novalidate>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name:</label>
+                    <input type="text" id="name" th:field="*{name}" class="form-control" />
+                    <div class="text-danger small" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" id="email" th:field="*{email}" class="form-control" />
+                    <div class="text-danger small" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="password" id="password" th:field="*{password}" class="form-control" />
+                    <div class="text-danger small" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone Number:</label>
+                    <input type="text" id="phone" th:field="*{usersDetails.phone}" class="form-control" />
+                    <div class="text-danger small" th:if="${#fields.hasErrors('usersDetails.phone')}" th:errors="*{usersDetails.phone}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="dob" class="form-label">Date of Birth:</label>
+                    <input type="date" id="dob" th:field="*{usersDetails.dob}" class="form-control" />
+                    <div class="text-danger small" th:if="${#fields.hasErrors('usersDetails.dob')}" th:errors="*{usersDetails.dob}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="street" class="form-label">Street:</label>
+                    <input type="text" id="street" th:field="*{usersDetails.street}" class="form-control" />
+                    <div class="text-danger small" th:if="${#fields.hasErrors('usersDetails.street')}" th:errors="*{usersDetails.street}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="city" class="form-label">City:</label>
+                    <input type="text" id="city" th:field="*{usersDetails.city}" class="form-control" />
+                    <div class="text-danger small" th:if="${#fields.hasErrors('usersDetails.city')}" th:errors="*{usersDetails.city}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="state" class="form-label">State:</label>
+                    <select id="state" th:field="*{usersDetails.state}" class="form-select">
+                        <option value="">Select State</option>
+                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                        <option value="Assam">Assam</option>
+                        <option value="Bihar">Bihar</option>
+                        <option value="Chhattisgarh">Chhattisgarh</option>
+                        <option value="Goa">Goa</option>
+                        <option value="Gujarat">Gujarat</option>
+                        <option value="Haryana">Haryana</option>
+                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+                        <option value="Jharkhand">Jharkhand</option>
+                        <option value="Karnataka">Karnataka</option>
+                        <option value="Kerala">Kerala</option>
+                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                        <option value="Maharashtra">Maharashtra</option>
+                        <option value="Manipur">Manipur</option>
+                        <option value="Meghalaya">Meghalaya</option>
+                        <option value="Mizoram">Mizoram</option>
+                        <option value="Nagaland">Nagaland</option>
+                        <option value="Odisha">Odisha</option>
+                        <option value="Punjab">Punjab</option>
+                        <option value="Rajasthan">Rajasthan</option>
+                        <option value="Sikkim">Sikkim</option>
+                        <option value="Tamil Nadu">Tamil Nadu</option>
+                        <option value="Telangana">Telangana</option>
+                        <option value="Tripura">Tripura</option>
+                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                        <option value="Uttarakhand">Uttarakhand</option>
+                        <option value="West Bengal">West Bengal</option>
+                        <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                        <option value="Chandigarh">Chandigarh</option>
+                        <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+                        <option value="Lakshadweep">Lakshadweep</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Puducherry">Puducherry</option>
+                        <option value="Ladakh">Ladakh</option>
+                        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                        <!-- Add other states as needed -->
+                    </select>
+                    <div class="text-danger small" th:if="${#fields.hasErrors('usersDetails.state')}" th:errors="*{usersDetails.state}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="pinCode" class="form-label">Pin Code:</label>
+                    <input type="text" id="pinCode" th:field="*{usersDetails.pinCode}" class="form-control" />
+                    <div class="text-danger small" th:if="${#fields.hasErrors('usersDetails.pinCode')}" th:errors="*{usersDetails.pinCode}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="paymentMethod" class="form-label">Preferred Payment Method:</label>
+                    <select id="paymentMethod" th:field="*{usersDetails.paymentMethod}" class="form-select">
+                        <option value="" disabled selected>Select your option</option>
+                        <option value="Cash">Cash on Delivery</option>
+                        <option value="Credit Card">Credit Card</option>
+                        <option value="UPI">UPI</option>
+                    </select>
+                    <div class="text-danger small" th:if="${#fields.hasErrors('usersDetails.paymentMethod')}" th:errors="*{usersDetails.paymentMethod}"></div>
+                </div>
+
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a th:href="@{/login}" class="btn btn-outline-dark me-2 mb-3 ">Back to Login</a>
+        <a th:href="@{/}" class="btn btn-outline-dark mb-3 ">Back to Home</a>
+    </div>
+</main>
+
+<!-- Bootstrap JS (optional, for dropdowns etc.) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

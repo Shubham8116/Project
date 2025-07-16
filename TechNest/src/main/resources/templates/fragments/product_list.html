@@ -1,0 +1,28 @@
+<!-- fragments/product-list.html -->
+<div th:fragment="productList" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <div th:each="product : ${products}" class="product-item">
+        <img th:src="@{${product.url}}" alt="Product Image">
+        <div class="product-details">
+            <h3><p class="name" th:text="${product.name}"></p></h3>
+            <p th:text="${product.description}"></p>
+            <p>
+                Price: ₹<span class="original-price" th:text="${product.price}"></span> &nbsp;&nbsp;
+                Discount: <span th:text="${product.discount}"></span>% &nbsp;&nbsp;&nbsp;&nbsp;
+
+                Final Price:<span class="discounted-price" th:if="${product.discount > 0}" th:text="${product.finalPrice}"></span>&#8377;
+
+            </p>
+            <p>Status: <span class="status" th:text="${product.status}"></span></p>
+            <p>Warranty: <span th:text="${product.warrantyPeriod}"></span> months</p>
+            <p>Manufacturer: <span th:text="${product.manufacturer}"></span></p>
+
+            <div sec:authorize="isAuthenticated()">
+                <button class="add-to-cart" th:data-product-id="${product.id}">Add to Cart</button>
+            </div>
+
+            <div sec:authorize="isAnonymous()">
+                <a href="/login"><button class="add-to-cart">Login to Add Item</button></a>
+            </div>
+        </div>
+    </div>
+</div>

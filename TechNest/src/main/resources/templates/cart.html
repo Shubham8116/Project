@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechNest - Cart</title>
+    <link rel="stylesheet" href="/css/cart.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/css/cart.js" defer></script>
+</head>
+<body>
+<header>
+    <div class="header-left">
+        <a href="/"><h1>TechNest</h1></a>
+    </div>
+    <div class="header-right">
+        <div sec:authorize="isAnonymous()">
+            <a href="/login">
+                <span class="login-icon"></span>
+            </a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <div sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{/admin}">
+                    <span class="show-dashboard-options" sec:authentication="name"></span>
+                </a>
+            </div>
+            <div sec:authorize="hasRole('USER')">
+                <div class="user-options">
+                    <span class="username" sec:authentication="name"></span>
+                    <div class="dropdown">
+                        <a th:href="@{/user}">User Dashboard</a>
+                        <a th:href="@{/logout}">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="/contact-us" class="contact-us"><h4>Contact Us</h4></a>
+    </div>
+    <div class="clock" id="clock"></div>
+</header>
+
+<div class="cart-container">
+    <h1 class="your-cart">Your Cart</h1>
+    <div th:if="${#lists.isEmpty(cartItems)}" style="text-align: center;">
+        <h2>Your cart is empty, please add items to cart</h2>
+        <img src="https://i.ibb.co/XyQZ0ph/Empty-Cart-Icon1-min.png" alt="Empty Cart" style="width: 300px;">
+    </div>
+
+    <div th:if="${!#lists.isEmpty(cartItems)}">
+        <div th:each="cart : ${cartItems}" class="cart-item">
+            <img th:src="@{${cart.product.url}}" alt="Product Image" class="cart-product-image">
+            <div class="cart-product-details">
+                <h3 th:text="${cart.product.name}">Product Name</h3>
+                <div class="quantity-controls">
+                    <button class="quantity-btn" th:onclick="'updateQuantity(' + ${cart.id} + ', ' + (${cart.quantity} - 1) + ')'">-</button>
+                    <span class="quantity" th:text="${cart.quantity}">1</span>
+                    <button class="quantity-btn" th:onclick="'updateQuantity(' + ${cart.id} + ', ' + (${cart.quantity} + 1) + ')'">+</button>
+                    <button class="quantity-btn remove-btn" th:onclick="'removeFromCart(' + ${cart.id} + ')'">Remove</button>
+
+                </div>
+                <p>Price: <span th:text="${cart.itemTotalAmount}">0.00</span>&#8377;</p>
+            </div>
+        </div>
+        <hr class="cart-divider"> <!-- Horizontal line added here -->
+        <div class="cart-summary">
+            <div class="cart-summary">
+                <p class="cart-summary-item"><strong>SubTotal:</strong> <span class="lighter" th:text="${subTotal}">0.00</span>&#8377;</p>
+                <p class="cart-summary-item"><strong>GST (18%):</strong> <span class="lighter" th:text="${gst}">0.00</span>&#8377;</p>
+                <p class="cart-summary-item"><strong>Grand Total:</strong> <span class="lighter" th:text="${grandTotal}">0.00</span>&#8377;</p>
+            <p class="free-delivery">Your order is eligible for FREE Delivery</p>
+            <div class="checkout-container">
+              <a href="/checkout">  <button class="checkout-btn">Checkout</button></a>
+            </div>
+    </div>
+</div>
+</div>
+</div>
+
+<div id="toast" class="toast">Item removed successfully</div>
+
+</body>
+</html>
+

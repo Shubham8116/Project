@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechNest - Checkout</title>
+    <link rel="stylesheet" href="/css/address_payment_details.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/css/cart.js" defer></script>
+</head>
+<body>
+<header>
+    <div class="header-left">
+        <a href="/"><h1>TechNest</h1></a>
+    </div>
+    <div class="header-right">
+        <div sec:authorize="isAnonymous()">
+            <a href="/login">
+                <span class="login-icon"></span>
+            </a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <div sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{/admin}">
+                    <span class="show-dashboard-options" sec:authentication="name"></span>
+                </a>
+            </div>
+            <div sec:authorize="hasRole('USER')">
+                <div class="user-options">
+                    <span class="username" sec:authentication="name"></span>
+                    <div class="dropdown">
+                        <a th:href="@{/user}">User Dashboard</a>
+                        <a th:href="@{/logout}">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="/contact" class="contact-us"><h4>Contact Us</h4></a>
+        <div class="clock" id="clock"></div>
+    </div>
+</header>
+
+<div class="checkout-container">
+    <h1>Address and Payment Details</h1>
+    <div class="address-section">
+        <h3>Deliver to:</h3>
+        <p th:text="${user.name}">User Name</p>
+        <h3>Address:</h3>
+        <p th:text="${userDetails.street}">Street</p>
+        <p th:text="${userDetails.city}">City</p>
+        <p th:text="${userDetails.state}">State</p>
+        <p th:text="${userDetails.pinCode}">Pincode</p>
+    </div>
+    <div class="payment-section">
+        <h3>Select a payment method:</h3>
+        <form action="/place-order" method="get">
+            <div>
+                <label>
+                    <input type="radio" name="paymentMethod" value="Cash on Delivery" th:checked="${userDetails.paymentMethod == 'Cash'}">
+                    Cash on Delivery
+                    <img src="/css/CoD.jpg" alt="Cash on Delivery">
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input type="radio" name="paymentMethod" value="Credit Card" th:checked="${userDetails.paymentMethod == 'Credit Card'}">
+                    Credit Card
+                    <img src="/css/Credit_Card.png" alt="Credit Card">
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input type="radio" name="paymentMethod" value="UPI" th:checked="${userDetails.paymentMethod == 'UPI'}">
+                    UPI
+                    <img src="/css/UPI.webp" alt="UPI">
+                </label>
+            </div>
+            <div class="continue-btn-container">
+                <button type="submit" class="checkout-btn">Continue</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // Clock functionality
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            $('#clock').text(`${hours}:${minutes}:${seconds}`);
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    });
+</script>
+</body>
+</html>

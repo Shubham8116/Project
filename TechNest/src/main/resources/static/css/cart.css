@@ -1,0 +1,241 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+}
+
+.header-left h1 {
+    margin: 0;
+}
+
+.header-left a {
+    color: inherit; /* Inherit the color from the parent element */
+    text-decoration: none;
+
+}
+
+
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 40px; /* Adjust space between elements */
+    margin-left: auto; /* Pushes the right section to the far right */
+}
+
+.header-right .login-icon {
+    font-size: 2em;
+    color: white;
+    margin-top: 40px;
+
+
+}
+
+
+.contact-us {
+    color: white;
+    text-decoration: none;
+    margin-right: 70px;
+
+}
+
+.user-options {
+    position: relative;
+    margin-right: 20px;
+    top: 2px;
+}
+
+.user-options .username {
+    cursor: pointer;
+    color: white;
+    margin-right: 1px;
+    margin-left: 100px;
+    top: 80px;
+}
+
+.user-options .dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    color: black;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.user-options .dropdown a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.user-options .dropdown a:hover {
+    background-color: #ddd;
+}
+
+.user-options:hover .dropdown {
+    display: block;
+}
+
+
+.cart-container {
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.cart-product-image {
+    width: 350px;
+    height: 210px;
+    margin-right: 20px;
+}
+
+.cart-product-details {
+    flex: 1;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.quantity-btn {
+    background-color: #ffcc00;
+    border: none;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 0 10px;
+}
+
+.quantity {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.cart-summary {
+    text-align: right;
+    margin-top: 20px;
+    font-size: 18px;
+    line-height: 2;
+}
+
+
+.cart-summary p {
+    margin: 5px 0;
+}
+
+.cart-summary-item strong {
+    font-weight: bolder;
+    font-size: 1.2em;
+}
+
+.lighter {
+    font-weight: bolder;
+    font-size: 1.6em;
+}
+
+.checkout-container {
+    margin-top: 20px; /* Space between the total section and the checkout button */
+    margin-bottom: 20px;
+}
+
+.checkout-btn {
+    background-color: #ffcc00;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.checkout-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.checkout-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.cart-divider {
+    border: 1px solid #000;
+    margin: 20px 0;
+}
+
+.your-cart{
+    text-align: center;
+}
+
+.cart-item{
+    border: 1px solid #000;
+}
+.free-delivery {
+    color: green;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.remove-btn {
+    margin-left: 15px;
+    background-color: #ffcc00; /* same yellow */
+    color: #333;
+    font-weight: bold;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.toast {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    bottom: 40px;
+    font-size: 17px;
+    opacity: 0;
+    transition: opacity 0.5s ease, bottom 0.5s ease;
+}
+
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+    bottom: 60px;
+}

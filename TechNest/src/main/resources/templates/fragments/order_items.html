@@ -1,0 +1,19 @@
+<div id="order-details-section" th:fragment="orderDetails">
+    <h3>Order Details</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${orderItems}">
+            <td th:text="${item.product.name}">Product Name</td>
+            <td th:text="${item.quantity}">1</td>
+            <td th:text="${item.itemTotalAmount}">0.00</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

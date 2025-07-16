@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard - TechNest</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+        }
+        .navbar, .dropdown-menu {
+            background-color: #000;
+        }
+        .navbar-brand, .nav-link, .dropdown-item {
+            color: #fff;
+        }
+        .navbar-brand:hover, .nav-link:hover, .dropdown-item:hover {
+            color: #ccc;
+        }
+        .btn-logout {
+            color: #fff;
+            border: 1px solid #fff;
+        }
+        .btn-logout:hover {
+            color: #000;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">TechNest</a>
+        <div class="ml-auto">
+            <a href="/logout" class="btn btn-logout">Logout</a>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h1 class="text-center">Admin Dashboard</h1>
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <a href="/admin/products" class="btn btn-dark btn-block">View/Add Product</a>
+            </div>
+            <div class="col-md-4">
+                <a href="/admin/users" class="btn btn-dark btn-block">Users Information</a>
+            </div>
+            <div class="col-md-4">
+                <a href="/admin/inventory" class="btn btn-dark btn-block">View/Update Inventory</a>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

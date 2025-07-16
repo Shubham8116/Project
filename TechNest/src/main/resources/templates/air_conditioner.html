@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechNest - Televisions</title>
+    <link rel="stylesheet" href="/css/product.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/css/product.js" defer></script>
+</head>
+<body>
+<!-- Header Section -->
+<header>
+    <div class="header-left">
+        <a href="/"><h1>TechNest</h1></a>
+    </div>
+    <div class="header-center">
+        <input type="text" placeholder="What are you looking for?">
+    </div>
+    <div class="header-right">
+        <div sec:authorize="isAnonymous()">
+            <a href="/login">
+                <span class="login-icon">👤</span> <!-- Half-man icon -->
+            </a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <div sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{/admin}">
+                    <span class="show-dashboard-options" sec:authentication="name"></span>
+                </a>
+            </div>
+            <div sec:authorize="hasRole('USER')">
+                <div class="user-options">
+                    <span class="username" sec:authentication="name"></span>
+                    <div class="dropdown">
+                        <a th:href="@{/user}">User Dashboard</a>
+                        <a th:href="@{/logout}">Logout</a>
+                    </div>
+                </div>
+                <div class="cart">
+                    <a href="/view-cart">
+                        <span class="cart-icon">🛒</span> <!-- Cart icon -->
+                        <span class="cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <a href="/contact-us" class="contact-us"><h4>Contact Us</h4></a>
+    </div>
+    <div class="clock" id="clock"></div>
+</header>
+
+<!-- Navigation Section -->
+<nav>
+    <ul>
+        <li><a th:href="@{/television}">Televisions</a></li>
+        <li><a th:href="@{/air-conditioner}">Air Conditioners</a></li>
+        <li><a th:href="@{/refrigerator}">Refrigerators</a></li>
+        <li><a th:href="@{/washing-machine}">Washing Machines</a></li>
+        <li><a th:href="@{/geyser}">Geysers</a></li>
+        <li><a th:href="@{/purifier}">Purifiers</a></li>
+    </ul>
+</nav>
+
+<!-- Main Content Section -->
+<div class="main-content">
+    <div class="filters">
+        <h2>Filter Options</h2>
+        <div class="filter-section">
+            <h3>Filter by Brands</h3>
+            <label><input type="radio" name="manufacturer" value="" checked> All</label><br><br>
+            <label><input type="radio" name="manufacturer" value="GODREJ"> GODREJ</label><br><br>
+            <label><input type="radio" name="manufacturer" value="VOLTAS"> VOLTAS</label><br><br>
+            <label><input type="radio" name="manufacturer" value="BLUESTAR"> BLUESTAR</label><br><br>
+
+        </div>
+
+    </div>
+    <div class="product-list">
+        <h2 class="page-headline">This Festive Season Explore the Best Air Conditioner from TechNest</h2>
+        <div id="product-container" data-filter-url="/filter-air-conditioner">
+
+        <div th:each="product : ${products}">
+            <div class="product-item">
+                <img th:src="@{${product.url}}" alt="Product Image">
+                <div class="product-details">
+                    <h3> <p class="name" th:text="${product.name}">Product Name</p></h3>
+                    <p th:text="${product.description}">Product Description</p>
+                    <p>Price: <span class="original-price" th:text="${product.price}"></span>&#8377;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Discount: <span th:text="${product.discount}"></span>% &nbsp;&nbsp;&nbsp;&nbsp;
+
+                        Final Price:<span class="discounted-price" th:if="${product.discount > 0}" th:text="${product.finalPrice}"></span>&#8377;
+
+                    </p>
+                    <p>Status: <span class="status" th:text="${product.status}"></span></p>
+                    <p>Warranty: <span th:text="${product.warrantyPeriod}"></span>months</p>
+                    <p>Manufacturer: <span th:text="${product.manufacturer}"></span></p>
+
+                    <!-- Only visible if user is authenticated -->
+                    <div sec:authorize="isAuthenticated()">
+                        <button class="add-to-cart" th:data-product-id="${product.id}">Add to Cart</button>
+                    </div>
+
+                    <!-- Shown only if user is not logged in -->
+                    <div sec:authorize="isAnonymous()">
+                        <a href="/login">
+                            <button class="add-to-cart">Login to Add Item</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+</body>
+</html>

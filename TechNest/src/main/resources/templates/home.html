@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechNest - Online Marketplace for Electronics</title>
+    <link rel="stylesheet" href="/css/home.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/css/script.js" defer></script>
+</head>
+<body>
+<header>
+    <div class="header-left">
+        <h1>TechNest</h1>
+    </div>
+    <div class="header-center">
+        <input type="text" placeholder="What are you looking for?">
+    </div>
+    <div class="header-right">
+        <div sec:authorize="isAnonymous()">
+            <a href="/login">
+                <span class="login-icon">👤</span> <!-- Half-man icon -->
+            </a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+
+            <div sec:authorize="hasRole('ADMIN')">
+
+                <a th:href="@{/admin}">
+                    <span class="show-dashboard-options" sec:authentication="name"></span>
+                </a>
+            </div>
+
+            <div sec:authorize="hasRole('USER')">
+            <div class="user-options">
+                <span class="username" sec:authentication="name"></span>
+                <div class="dropdown">
+                    <a th:href="@{/user}">User Dashboard</a>
+                    <a th:href="@{/logout}">Logout</a>
+                </div>
+            </div>
+            <div class="cart">
+                <a href="/view-cart">
+                    <span class="cart-icon">🛒</span> <!-- Cart icon -->
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+            </div>
+        </div>
+        <a href="/contact-us" class="contact-us"><h4>Contact Us</h4></a>
+    </div>
+    <div class="clock" id="clock"></div>
+</header>
+
+<nav>
+    <ul>
+        <li><a th:href="@{/television}">Televisions</a></li>
+        <li><a th:href="@{/air-conditioner}">Air Conditioners</a></li>
+        <li><a th:href="@{/refrigerator}">Refrigerators</a></li>
+        <li><a th:href="@{/washing-machine}">Washing Machines</a></li>
+        <li><a th:href="@{/geyser}">Geysers</a></li>
+        <li><a th:href="@{/purifier}">Purifiers</a></li>
+    </ul>
+</nav>
+<main>
+    <section class="slider">
+        <div class="slider-container">
+            <img src="https://i.ibb.co/0CZX6Mw/img-1.jpg" alt="Electronics Item 1">
+            <img src="https://i.ibb.co/K99v7vz/img-2.jpg" alt="Electronics Item 2">
+            <img src="https://i.ibb.co/VttC52L/img-3.webp" alt="Electronics Item 3">
+            <img src="https://i.ibb.co/sKDsVKR/img-4.webp" alt="Electronics Item 4">
+        </div>
+        <button class="prev-main">❮</button>
+        <button class="next-main">❯</button>
+    </section>
+    <section class="products">
+        <div class="product">
+            <h2>Television</h2>
+            <a th:href="@{/television}">
+                <img src="https://i.ibb.co/ww0SWQ9/Television.png" alt="Television"></a>
+        </div>
+        <div class="product">
+            <h2>Air Conditioner</h2>
+            <a th:href="@{/air-conditioner}">
+                <img src="https://i.ibb.co/m0NYsWq/AC.png" alt="Air Conditioner"></a>
+        </div>
+        <div class="product">
+            <h2>Refrigerator</h2>
+            <a th:href="@{/refrigerator}">
+                <img src="https://i.ibb.co/yFPxDj8/Refrigerator.png" alt="Refrigerator"></a>
+        </div>
+        <div class="product">
+            <h2>Washing Machine</h2>
+            <a th:href="@{/washing-machine}">
+                <img src="https://i.ibb.co/DgSHDZZ/Washing-Machine.png" alt="Washing Machine"></a>
+        </div>
+        <div class="product">
+            <h2>Geyser</h2>
+            <a th:href="@{/geyser}">
+                <img src="https://i.ibb.co/VTq9d8r/Geyser.png" alt="Geyser"></a>
+        </div>
+        <div class="product">
+            <h2>Water Purifier</h2>
+            <a th:href="@{/purifier}">
+                <img src="https://i.ibb.co/zm8Q1FD/Water-Purifier.png" alt="Water Purifier"></a>
+        </div>
+    </section>
+    <section class="ads">
+        <a href="https://www.hdfcbank.com"><img src="https://i.ibb.co/2jVxmWP/finance1.webp" alt="HDFC Bank"></a>
+        <a href="https://www.icicibank.com"><img src="https://i.ibb.co/R2VMk8G/finance2.webp" alt="ICICI Bank"></a>
+    </section>
+    <section class="why-choose">
+        <h2>Why Choose TechNest?</h2>
+        <div class="why-choose-container">
+            <div class="why-choose-item">
+                <h3>Wide Range of Products</h3>
+                <p>At TechNest, we offer a vast selection of electronics from top brands, ensuring you find exactly what you need.</p>
+            </div>
+            <div class="why-choose-item">
+                <h3>Competitive Prices</h3>
+                <p>We provide the best deals and discounts, making high-quality electronics affordable for everyone.</p>
+            </div>
+            <div class="why-choose-item">
+                <h3>Trusted Brands</h3>
+                <p>We partner with reputable brands to bring you reliable and durable products.</p>
+            </div>
+            <div class="why-choose-item">
+                <h3>Excellent Customer Service</h3>
+                <p>Our dedicated support team is always ready to assist you with any queries or issues.</p>
+            </div>
+            <div class="why-choose-item">
+                <h3>Secure Shopping Experience</h3>
+                <p>Shop with confidence knowing that your personal information is protected with our advanced security measures.</p>
+            </div>
+        </div>
+    </section>
+    <section class="top-brands">
+        <h2>Our Top Brands</h2>
+        <div class="brand-slider">
+            <button class="prev-brand">❮</button>
+            <div class="brand-slider-container">
+                <img src="https://i.ibb.co/R6w9ztq/Samsung.webp" alt="Samsung">
+                <img src="https://i.ibb.co/b1jmT1p/Haier.webp" alt="LG">
+                <img src="https://i.ibb.co/PcMCS1Z/Sony.webp" alt="Sony">
+                <img src="https://i.ibb.co/zfy8Qsx/DELL.webp" alt="Dell">
+                <img src="https://i.ibb.co/RNyVMWr/Xiaomi.webp" alt="Xiaomi">
+                <img src="https://i.ibb.co/TW17Kkv/Whirlpool.png" alt="Whirlpool">
+                <img src="https://i.ibb.co/r5BcggB/LG.png" alt="LG">
+                <img src="https://i.ibb.co/r0NKnk3/Bluestar.png" alt="Bluestar">
+                <img src="https://i.ibb.co/25wLh7n/Voltas.png" alt="Voltas">
+                <img src="https://i.ibb.co/82F17j9/Bajaj.png" alt="Bajaj">
+                <img src="https://i.ibb.co/s99tNx1/Kent.png" alt="Kent">
+                <img src="https://i.ibb.co/pdtKcNX/PureIt.png" alt="PureIt">
+                <img src="https://i.ibb.co/sV3rYSL/Livpure.png" alt="Livepure">
+                <img src="https://i.ibb.co/p1mGcGf/AOSmith.png" alt="AOSmith">
+            </div>
+            <button class="next-brand">❯</button>
+        </div>
+    </section>
+</main>
+<footer>
+    <p class="disc-privacy">Disclaimer:</p>
+    <p>All product images are for illustrative purposes only.</p>
+    <p>All products listed on TechNest are subject to availability. We strive to keep our inventory updated, but stock levels may vary.</p>
+    <p>TechNest may contain links to third-party websites. We are not responsible for the content or privacy practices of these external sites.</p>
+    <p class="disc-privacy">Privacy Policy:</p>
+    <p>Your privacy is important to us.</p>
+    <a href="/contact-us" class="contact-us"><h4>Contact Us</h4></a>
+</footer>
+</body>
+</html>

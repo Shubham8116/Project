@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechNest - User Dashboard</title>
+    <link rel="stylesheet" href="/css/user_dashboard.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/css/user_dashboard.js" defer></script>
+</head>
+<body>
+<header>
+    <div class="header-left">
+        <a href="/"><h1>TechNest</h1></a>
+    </div>
+    <div class="header-right">
+        <div sec:authorize="isAnonymous()">
+            <a href="/login">
+                <span class="login-icon"></span>
+            </a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <div sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{/admin}">
+                    <span class="show-dashboard-options" sec:authentication="name"></span>
+                </a>
+            </div>
+            <div sec:authorize="hasRole('USER')">
+                <div class="user-options">
+                    <span class="username" sec:authentication="name"></span>
+                    <div class="dropdown">
+                        <a th:href="@{/user}">User Dashboard</a>
+                        <a th:href="@{/logout}">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="/contact-us" class="contact-us"><h4>Contact Us</h4></a>
+    </div>
+    <div class="clock" id="clock"></div>
+</header>
+<!-- Main wrapper for flexbox layout -->
+<div class="dashboard-wrapper">
+<!-- Sidebar -->
+<div class="sidebar">
+    <ul>
+        <li><a href="#" onclick="showSection('my-orders', event)">My Orders</a></li>
+        <li><a href="#" onclick="showSection('personal-info', event)">Personal Information</a></li>
+        <li><a href="#" onclick="showSection('change-address', event)">Change Address</a></li>
+<!--        <li><a href="#" onclick="showSection('deactivate-account', event)">Deactivate Account</a></li>-->
+        <li><a th:href="@{/logout}">Logout</a></li>
+    </ul>
+</div>
+
+<!-- Main content -->
+<div class="main-content">
+    <!-- My Orders Section -->
+    <div id="my-orders" class="content-section" style="display: none;">
+        <h2 class="section-title">My Orders</h2>
+        <div th:each="order : ${orders}" class="order-card">
+            <div class="order-summary">
+
+            <p><strong>Order Number:</strong> <span th:text="${order.orderNumber}">123456</span></p>
+            <p><strong>Total Amount:</strong> <span th:text="${order.totalAmount}">0.00</span>&#8377;</p>
+            <p><strong>Status:</strong> <span th:text="${order.orderStatus}">Confirmed</span></p>
+            <p><strong>Tracking Number:</strong> <span th:text="${order.trackingNumber}">ABCDEFGH</span></p>
+            <p><strong>Shipment Date:</strong> <span th:text="${order.shipmentDate}">ABCDEFGH</span></p>
+            <p><strong>Delivery Date:</strong> <span th:text="${order.estimatedDeliveryDate}">ABCDEFGH</span></p>
+            <div class="order-actions">
+
+
+                <button class="view-order-btn" th:onclick="'viewOrder(' + ${order.id} + ')'">View Order</button>
+                <button class="cancel-order-btn"
+                        th:attr="data-order-id=${order.id}"
+                        th:onclick="'cancelOrder(' + ${order.id} + ')'"
+                        th:disabled="${order.orderStatus.name() == 'CANCELLED' or order.orderStatus.name() == 'DELIVERED'}"
+                        th:text="${order.cancelButtonLabel}"
+                        th:classappend="${order.orderStatus.name() == 'CANCELLED' or order.orderStatus.name() == 'DELIVERED'} ? ' disabled-button' : ''">
+                </button>
+            </div>
+            </div>
+            <div th:attr="id='order-item-details-container-' + ${order.id}" class="order-details hidden"></div>
+
+            <hr>
+        </div>
+    </div>
+
+    <!-- Personal Information Section -->
+    <div id="personal-info" class="content-section" th:attr="style=${invalidData} ? 'display: block;' : 'display: none;'">
+        <h2 class="section-title">Personal Information</h2>
+        <form class="info-form" th:action="@{/update-info}" method="post">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" th:value="${user.name}">
+            <div th:if="${nameError}" class="text-danger small" th:text="${nameError}"></div>
+
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" th:value="${userDetails.phone}">
+            <div th:if="${phoneError}" class="text-danger small" th:text="${phoneError}"></div>
+
+            <button type="submit">Update Information</button>
+        </form>
+    </div>
+
+    <!-- Change Address Section -->
+    <div id="change-address" class="content-section" th:attr="style=${invalidAddressData} ? 'display: block;' : 'display: none;'">
+        <h2 class="section-title">Change Address</h2>
+        <form class="address-form" th:action="@{/update-address}" method="post">
+            <label for="street">Street</label>
+            <input type="text" id="street" name="street" th:value="${userDetails.street}">
+            <div th:if="${streetError}" class="text-danger small" th:text="${streetError}"></div>
+
+
+            <label for="city">City</label>
+            <input type="text" id="city" name="city" th:value="${userDetails.city}">
+            <div th:if="${cityError}" class="text-danger small" th:text="${cityError}"></div>
+
+
+            <label for="state">State</label>
+            <input type="text" id="state" name="state" th:value="${userDetails.state}">
+            <div th:if="${stateError}" class="text-danger small" th:text="${stateError}"></div>
+
+
+            <label for="pinCode">Pin Code</label>
+            <input type="text" id="pinCode" name="pinCode" th:value="${userDetails.pinCode}">
+            <div th:if="${pinError}" class="text-danger small" th:text="${pinError}"></div>
+
+
+            <button type="submit">Update Address</button>
+        </form>
+    </div>
+
+    <!-- Deactivate Account Section -->
+    <div id="deactivate-account" class="content-section" style="display: none;">
+        <h2 class="section-title">Deactivate Account</h2>
+        <p>Click the button below to deactivate your account. You can reactivate it later.</p>
+        <button onclick="alert('Account Deactivated')">Deactivate Account</button>
+    </div>
+
+
+</div>
+</div>
+
+<!-- Success pop-up -->
+<div id="info-update-toast" class="toast-popup" th:if="${infoUpdated}">
+    ✨ information updated successfully!
+</div>
+
+<!-- To show personal -info section when errors pop up-->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    let shouldOpenPersonalInfo = [[${invalidData}]];
+    if (shouldOpenPersonalInfo) {
+        showSection('personal-info', {target: document.querySelector('.sidebar ul li a[href="#personal-info"]')});
+    }
+    /*]]>*/
+</script>
+
+<!-- To show change - address section when errors pop up-->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    let showAddressSection = [[${invalidAddressData}]];
+    if (showAddressSection) {
+        showSection('change-address', {target: document.querySelector('.sidebar ul li a[href="#change-address"]')});
+    }
+    /*]]>*/
+</script>
+</body>
+</html>

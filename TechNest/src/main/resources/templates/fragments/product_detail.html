@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="productDetailContent">
+    <p><strong>Name:</strong> <span th:text="${productdetails.name}"></span></p>
+    <p><strong>Description:</strong> <span th:text="${productdetails.description}"></span></p>
+    <p><strong>Unit:</strong> <span th:text="${productdetails.unit}"></span></p>
+    <p><strong>Price:</strong> <span th:text="${productdetails.price}"></span></p>
+    <p><strong>Image URL:</strong> <span th:text="${productdetails.url}"></span></p>
+    <p><strong>Discount:</strong> <span th:text="${productdetails.discount+'%'}"></span></p>
+    <p><strong>Manufacturer:</strong> <span th:text="${productdetails.manufacturer}"></span></p>
+    <p><strong>Warranty Period:</strong> <span th:text="${productdetails.warrantyPeriod}"></span></p>
+
+</div>
+</body>
+</html>

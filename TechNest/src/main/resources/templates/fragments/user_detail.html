@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="userDetailContent">
+    <p><strong>Phone:</strong> <span th:text="${userdetails.phone}"></span></p>
+    <p><strong>DOB:</strong> <span th:text="${userdetails.dob}"></span></p>
+    <p><strong>Street:</strong> <span th:text="${userdetails.street}"></span></p>
+    <p><strong>City:</strong> <span th:text="${userdetails.city}"></span></p>
+    <p><strong>State:</strong> <span th:text="${userdetails.state}"></span></p>
+    <p><strong>Pin Code:</strong> <span th:text="${userdetails.pinCode}"></span></p>
+    <p><strong>Payment Method:</strong> <span th:text="${userdetails.paymentMethod}"></span></p>
+</div>
+</body>
+</html>

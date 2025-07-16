@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin - Products</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+        }
+        .sidebar {
+            background-color: #111;
+            padding: 20px;
+            height: 100vh;
+        }
+        .category-button {
+            background-color: #222;
+            color: #fff;
+            border: none;
+            margin: 5px 0;
+            width: 100%;
+            padding: 10px;
+            text-align: left;
+        }
+        .category-button.active {
+            background-color: #444;
+            font-weight: bold;
+        }
+        .table th, .table td {
+            color: #fff;
+        }
+        .btn-outline-light {
+            border: 1px solid #fff;
+            color: #fff;
+        }
+        .btn-outline-light:hover {
+            background-color: #fff;
+            color: #000;
+        }
+        h2{
+            text-align: center;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!--- This loads Bootstrap’s JavaScript functionality (e.g. modals, toasts, dropdowns).-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <script>
+
+        $(document).ready(function() {
+            $('.view-product-btn').click(function(e) {
+                e.preventDefault();
+                var productId = $(this).data('id');
+
+                $.get('/admin/products/view/' + productId, function(data) {
+                    $('#modalBodyContent').html(data);
+                    $('#productDetailModal').modal('show');
+                });
+            });
+
+
+            $(".disabled-btn").on("click", function (e) {
+                e.preventDefault(); // Stop link from navigating
+                alert("Because of less data of products the delete functionality is currently disabled.");
+            });
+        });
+
+
+    </script>
+
+
+</head>
+<body>
+
+<!-- product add success message-->
+<div th:if="${productAdded == true}" class="alert alert-success">
+    Product added successfully!
+</div>
+
+
+<!-- product delete success message-->
+
+<div th:if="${productDeleted == true}" class="alert alert-danger">
+    Product deleted successfully.
+</div>
+
+<!-- product update success message-->
+
+<div th:if="${productUpdated == true}" class="alert alert-info">
+    Product updated successfully!
+</div>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 sidebar">
+
+            <a th:href="@{/admin}" class="btn btn-outline-light btn-block mb-4">Back to Dashboard</a>
+
+            <a th:href="@{/admin/products/add/new}" class="btn btn-outline-light btn-block mb-4">Add Product</a>
+
+
+            <div class="d-flex flex-column">
+                <a th:href="@{/admin/products(category='Television')}"
+                   th:classappend="${selectedCategory} == 'Television' ? 'active'"
+                   class="category-button">Television</a>
+                <a th:href="@{/admin/products(category='Washing Machine')}"
+                   th:classappend="${selectedCategory} == 'Washing Machine' ? 'active'"
+                   class="category-button">Washing Machine</a>
+                <a th:href="@{/admin/products(category='AC')}"
+                   th:classappend="${selectedCategory} == 'AC' ? 'active'"
+                   class="category-button">AC</a>
+                <a th:href="@{/admin/products(category='Geyser')}"
+                   th:classappend="${selectedCategory} == 'Geyser' ? 'active'"
+                   class="category-button">Geyser</a>
+                <a th:href="@{/admin/products(category='Refrigerator')}"
+                   th:classappend="${selectedCategory} == 'Refrigerator' ? 'active'"
+                   class="category-button">Refrigerator</a>
+                <a th:href="@{/admin/products(category='Water Purifier')}"
+                   th:classappend="${selectedCategory} == 'Water Purifier' ? 'active'"
+                   class="category-button">Water Purifier</a>
+            </div>
+        </div>
+
+        <!-- Product List -->
+        <div class="col-md-9 mt-4">
+            <h2 th:text="'Products - ' + ${selectedCategory}">Products - Television</h2>
+            <table class="table table-dark table-striped mt-3">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Product Code</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product, iterStat : ${products}">
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td th:text="${product.productCode}"></td>
+                    <td th:text="${product.name}"></td>
+                    <td th:text="'₹' + ${product.price}"></td>
+                    <td>
+                        <a href="#" class="btn btn-info btn-sm view-product-btn" th:data-id="${product.id}">View</a>
+
+
+                        <a th:href="@{/admin/products/edit/{id}(id=${product.id})}" class="btn btn-warning btn-sm">Update</a>
+
+                        <a th:href="@{/admin/products/delete/{id}(id=${product.id})}" class="btn btn-danger btn-sm disabled-btn"  style="pointer-events: auto; opacity: 0.5;cursor: not-allowed" >Delete </a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(products)}">
+                    <td colspan="5" class="text-center text-muted">No products found in this category.</td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<!-- pop up for product details view button -->
+<div class="modal fade" id="productDetailModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content text-dark">
+            <div class="modal-header">
+                <h5 class="modal-title">Product Details</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent">
+                Loading...
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Pop up for product add modal form-->
+
+<div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content text-white bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title" th:text="${updateMode} ? 'Update Product' : 'Add New Product'">Add New Product</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form th:action="${updateMode} ? @{'/admin/products/update'} : @{'/admin/products/add'}"
+                  th:object="${productFormDto}" method="post">
+
+                <div class="modal-body">
+                    <!-- Product Details -->
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Name</label>
+                            <input type="text" class="form-control" th:field="*{name}" required>
+                            <div th:if="${#fields.hasErrors('name')}" class="text-danger small" th:errors="*{name}"></div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Product Code</label>
+                            <input type="text" class="form-control" th:field="*{productCode}" required>
+                            <div th:if="${#fields.hasErrors('productCode')}" class="text-danger small" th:errors="*{productCode}"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control" th:field="*{description}" rows="2"></textarea>
+                        <div th:if="${#fields.hasErrors('description')}" class="text-danger small" th:errors="*{description}"></div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label>Unit</label>
+                            <input type="text" class="form-control" th:field="*{unit}">
+                            <div th:if="${#fields.hasErrors('unit')}" class="text-danger small" th:errors="*{unit}"></div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Price</label>
+                            <input type="number" class="form-control" step="0.01" th:field="*{price}">
+                            <div th:if="${#fields.hasErrors('price')}" class="text-danger small" th:errors="*{price}"></div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Discount (%)</label>
+                            <input type="number" class="form-control" step="0.01" th:field="*{discount}">
+                            <div th:if="${#fields.hasErrors('discount')}" class="text-danger small" th:errors="*{discount}"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Manufacturer</label>
+                            <input type="text" class="form-control" th:field="*{manufacturer}">
+                            <div th:if="${#fields.hasErrors('manufacturer')}" class="text-danger small" th:errors="*{manufacturer}"></div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Warranty Period (months)</label>
+                            <input type="number" class="form-control" th:field="*{warrantyPeriod}">
+                            <div th:if="${#fields.hasErrors('warrantyPeriod')}" class="text-danger small" th:errors="*{warrantyPeriod}"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Image URL</label>
+                        <input type="text" class="form-control" th:field="*{url}">
+                        <div th:if="${#fields.hasErrors('url')}" class="text-danger small" th:errors="*{url}"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select class="form-control" th:field="*{categoryName}">
+                            <option value="">-- Select --</option>
+                            <option value="television">Television</option>
+                            <option value="washing machine">Washing Machine</option>
+                            <option value="water purifier">Water Purifier</option>
+                            <option value="geyser">Geyser</option>
+                            <option value="air conditioner">AC</option>
+                            <option value="refrigerator">Refrigerator</option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('categoryName')}" class="text-danger small" th:errors="*{categoryName}"></div>
+                    </div>
+
+                    <!-- Inventory Section: Only show when adding -->
+                    <div th:if="${updateMode != true}">
+                        <hr class="bg-light">
+                        <h5>Inventory Info</h5>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label>Stock Available</label>
+                                <input type="number" class="form-control" th:field="*{stockAvailable}">
+                                <div th:if="${#fields.hasErrors('stockAvailable')}" class="text-danger small" th:errors="*{stockAvailable}"></div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Batch Number</label>
+                                <input type="number" class="form-control" th:field="*{batchNumber}">
+                                <div th:if="${#fields.hasErrors('batchNumber')}" class="text-danger small" th:errors="*{batchNumber}"></div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Supplier</label>
+                                <input type="text" class="form-control" th:field="*{supplier}">
+                                <div th:if="${#fields.hasErrors('supplier')}" class="text-danger small" th:errors="*{supplier}"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-8">
+                                <label>Warehouse Location</label>
+                                <input type="text" class="form-control" th:field="*{warehouseLocation}">
+                                <div th:if="${#fields.hasErrors('warehouseLocation')}" class="text-danger small" th:errors="*{warehouseLocation}"></div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Received Date</label>
+                                <input type="date" class="form-control" th:field="*{receivedDate}">
+                                <div th:if="${#fields.hasErrors('receivedDate')}" class="text-danger small" th:errors="*{receivedDate}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer bg-dark">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-light" th:text="${updateMode} ? 'Update' : 'Submit'">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- to disappear message-->
+<script>
+    setTimeout(function() {
+        const successAlert = document.querySelector('.alert-success');
+        const dangerAlert = document.querySelector('.alert-danger');
+        const updateAlert = document.querySelector('.alert-info');
+        if (successAlert) successAlert.style.display = 'none';
+        if (dangerAlert) dangerAlert.style.display = 'none';
+        if (updateAlert) updateAlert.style.display = 'none';
+    }, 2000); // 2000 milliseconds = 2 seconds
+</script>
+<!-- if there are errors in add product form then from controller we are sending errors with model.addAttribute("showModal", true); so the model form should be open as it is-->
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const shouldShowModal = [[${showModal}]];
+    if (shouldShowModal) {
+        $('#addProductModal').modal('show');
+    }
+    /*]]>*/
+</script>
+
+
+</body>
+</html>

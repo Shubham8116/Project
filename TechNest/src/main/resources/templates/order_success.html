@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechNest - Order Success</title>
+
+    <link rel="stylesheet" href="/css/order_success.css">
+
+</head>
+<body>
+<header>
+    <div class="header-left">
+        <a href="/"><h1>TechNest</h1></a>
+    </div>
+    <div class="header-right">
+        <div sec:authorize="isAnonymous()">
+            <a href="/login">
+                <span class="login-icon"></span>
+            </a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <div sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{/admin}">
+                    <span class="show-dashboard-options" sec:authentication="name"></span>
+                </a>
+            </div>
+            <div sec:authorize="hasRole('USER')">
+                <div class="user-options">
+                    <span class="username" sec:authentication="name"></span>
+                    <div class="dropdown">
+                        <a th:href="@{/user}">User Dashboard</a>
+                        <a th:href="@{/logout}">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="/contact" class="contact-us"><h4>Contact Us</h4></a>
+        <div class="clock" id="clock"></div>
+    </div>
+</header>
+
+<div class="order-success-container">
+    <!-- Confetti animation elements -->
+    <div class="confetti left"></div>
+    <div class="confetti right"></div>
+    <div class="order-success-message">
+        <h1>Order Placed Successfully!</h1>
+        <h2><p>Thank you for shopping with TechNest. Your order has been successfully placed and is being processed.</p></h2>
+        <p><strong>Total Amount:</strong> <span th:text="${order.totalAmount}">0.00</span>&#8377;</p>
+        <p><strong>Order Number:</strong> <span th:text="${order.orderNumber}">123456</span></p>
+        <p><strong>Order Status:</strong> <span th:text="${order.orderStatus}">Confirmed</span></p>
+        <p><strong>Tracking Number:</strong> <span th:text="${order.trackingNumber}">ABCDEFGH</span></p>
+        <p><strong>Shipment Date:</strong> <span th:text="${#dates.format(order.shipmentDate, 'dd MMMM, yyyy')}">9 November, 2024</span></p>
+        <p><strong>Estimated Delivery Date:</strong> <span th:text="${#dates.format(order.estimatedDeliveryDate, 'dd MMMM, yyyy')}">14 November, 2024</span></p>
+    </div>
+    <div class="continue-shopping">
+        <a href="/" class="continue-shopping-btn">Continue Shopping</a>
+    </div>
+</div>
+
+
+
+</body>
+</html>

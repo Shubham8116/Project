@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechNest - Place Order</title>
+    <link rel="stylesheet" href="/css/place_order.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<header>
+    <div class="header-left">
+        <a href="/"><h1>TechNest</h1></a>
+    </div>
+    <div class="header-right">
+        <div sec:authorize="isAnonymous()">
+            <a href="/login">
+                <span class="login-icon"></span>
+            </a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <div sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{/admin}">
+                    <span class="show-dashboard-options" sec:authentication="name"></span>
+                </a>
+            </div>
+            <div sec:authorize="hasRole('USER')">
+                <div class="user-options">
+                    <span class="username" sec:authentication="name"></span>
+                    <div class="dropdown">
+                        <a th:href="@{/user}">User Dashboard</a>
+                        <a th:href="@{/logout}">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="/contact" class="contact-us"><h4>Contact Us</h4></a>
+        <div class="clock" id="clock"></div>
+    </div>
+</header>
+
+<div class="place-order-container">
+    <div class="left-section">
+        <h2>Your Cart Items</h2>
+        <div th:each="cartItem : ${cartItems}" class="cart-item">
+            <img th:src="@{${cartItem.product.url}}" alt="Product Image" class="cart-product-image">
+            <div class="cart-product-details">
+                <h3 th:text="${cartItem.product.name}">Product Name</h3>
+                <p>Quantity: <span th:text="${cartItem.quantity}">1</span></p>
+                <p>Price: <span th:text="${cartItem.itemTotalAmount}">0.00</span>&#8377;</p>
+            </div>
+        </div>
+    </div>
+    <div class="right-section">
+        <div class="order-total-section">
+            <h3>Order Total</h3>
+            <p><span class="order-total" th:text="${grandTotal}">0.00</span>&#8377;</p>
+        </div>
+        <div class="arrival-date-section">
+            <h3 style="color: green;">Arriving on:</h3>
+            <p th:text="${arrivalDate}">9 November, 2024</p>
+            <p>If you order before 11 pm</p>
+        </div>
+        <div class="delivery-address-section">
+            <h3>Address:</h3>
+            <p th:text="${userDetails.street}">Street</p>
+            <p th:text="${userDetails.city}">City</p>
+            <p th:text="${userDetails.state}">State</p>
+            <p th:text="${userDetails.pinCode}">Pincode</p>
+        </div>
+        <div class="payment-method-section">
+            <h3>Paying with:</h3>
+            <p th:text="${paymentMethod}">Payment Method</p>
+            <p style="color:red;">By placing your order, you agree to TechNest's Terms & conditions.</p>
+        </div>
+    </div>
+    <div class="place-order-btn-container">
+        <a th:href="@{/order-success(paymentMethod=${paymentMethod})}">
+            <button class="place-order-btn">Place Order</button>
+        </a>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // Clock functionality with day and month
+        function updateClock() {
+            const now = new Date();
+
+            const day = now.getDate().toString().padStart(2, '0');
+            const month = now.toLocaleString('default', { month: 'long' }); // e.g., "July"
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+
+            const formatted = `${day} ${month} | ${hours}:${minutes}:${seconds}`;
+            $('#clock').text(formatted);
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    });
+</script>
+</body>
+</html>

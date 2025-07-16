@@ -1,0 +1,193 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+}
+
+.header-left h1 {
+    margin: 0;
+}
+
+.header-left a {
+    color: inherit; /* Inherit the color from the parent element */
+    text-decoration: none;
+
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-left: auto;
+}
+
+.header-right .login-icon {
+    font-size: 2em;
+    color: white;
+    margin-top: 40px;
+}
+
+.contact-us {
+    color: white;
+    text-decoration: none;
+    margin-right: 70px;
+}
+
+.user-options {
+    position: relative;
+    margin-right: 20px;
+    top: 2px;
+}
+
+.user-options .username {
+    cursor: pointer;
+    color: white;
+    margin-right: 10px;
+}
+
+.user-options .dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    color: black;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.user-options .dropdown a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.user-options .dropdown a:hover {
+    background-color: #ddd;
+}
+
+.user-options:hover .dropdown {
+    display: block;
+}
+
+
+
+.order-success-container {
+    text-align: center;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 600px;
+    margin: 40px auto;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;  /* Ensure confetti stays within the container */
+}
+
+.order-success-message h2 {
+    color: green;
+}
+
+.order-success-message p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.continue-shopping-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #333;
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.continue-shopping-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Confetti animation styles */
+.confetti {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.confetti.left {
+    left: 0;
+}
+
+.confetti.right {
+    right: 0;
+}
+
+.confetti::before,
+.confetti::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: linear-gradient(45deg, #ff6347, #87ceeb, #32cd32, #ffa500, #ff69b4);
+    animation: confetti-fall linear infinite;
+}
+
+@keyframes confetti-fall {
+    0% {
+        top: -10%;
+        opacity: 1;
+        transform: rotate(0deg);
+    }
+    100% {
+        top: 100%;
+        opacity: 0;
+        transform: rotate(360deg);
+    }
+}
+
+.confetti.left::before,
+.confetti.right::before {
+    animation-duration: 3s;
+}
+
+.confetti.left::after,
+.confetti.right::after {
+    animation-duration: 5s;
+}
+
+.confetti.left::before {
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.confetti.left::after {
+    left: 50%;
+    animation-delay: 1s;
+}
+
+.confetti.right::before {
+    right: 20%;
+    animation-delay: 0.5s;
+}
+
+.confetti.right::after {
+    right: 50%;
+    animation-delay: 1.5s;
+}
