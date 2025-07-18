@@ -57,7 +57,7 @@ public class AdminDashboardController {
         UsersDetails usersDetails = adminService.getUserDetailsByUsersId(id);
         model.addAttribute("userdetails", usersDetails);
 
-        return "/fragments/user_detail::userDetailContent";
+        return "fragments/user_detail::userDetailContent";
     }
 
     @GetMapping("/admin/users/delete/{id}")
