@@ -140,7 +140,7 @@ public class AdminDashboardController {
         Product productDetails = productService.getProductDetailsByProductId(id);
         model.addAttribute("productdetails", productDetails);
 
-        return "/fragments/product_detail::productDetailContent";
+        return "fragments/product_detail::productDetailContent";
     }
 
 
