@@ -116,7 +116,7 @@ public class UserDashboardController
     public String getOrderItems(@RequestParam("orderId") int orderId, Model model) {
         List<OrderItem> orderItems = orderService.getOrderItemsByOrderId(orderId);
         model.addAttribute("orderItems", orderItems);
-        return "/fragments/order_items:: orderDetails" ; // points to Thymeleaf fragment
+        return "fragments/order_items:: orderDetails" ; // points to Thymeleaf fragment
     }
 
     @PostMapping("/cancel-order")
