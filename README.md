@@ -46,17 +46,17 @@
 
 ## 📁 Application Structure
 
-| Component                  | Description                                              |
-|----------------------------|----------------------------------------------------------|
-| `ProductController`        | Handles product listing, search, and filtering       |
-| `CartController`           | Manages cart operations                              |
-| `PlaceOrderController`     | Handles order confirmation and user input            |
-| `AdminDashboardController` | Admin dashboard for managing products/users          |
-| `UserDashboardController`  | User dashboard for profile and orders                |
-| `SecurityConfig`           | Spring Security setup with role-based access         |
-| `GlobalExceptionHandler`   | Global exception handling using `@ControllerAdvice`  |
-| `JpaConfig`                | JPA auditing setup for tracking entity changes       |
-| `Templates/`               | Thymeleaf HTML views                                 |
+| Component                  | Description                               |
+|----------------------------|-------------------------------------------|
+| `ProductController`        | Handles product listing, search, and filtering |
+| `CartController`           | Manages cart operations               |
+| `PlaceOrderController`     | Handles order confirmation            |
+| `AdminDashboardController` | Admin dashboard for managing products/users |
+| `UserDashboardController`  | User dashboard for profile and orders |
+| `SecurityConfig`           | Spring Security setup with role-based access |
+| `GlobalExceptionHandler`   | Global exception handling using `@ControllerAdvice` |
+| `JpaConfig`                | JPA auditing setup for tracking entity changes |
+| `Templates/`               | Thymeleaf HTML views                  |
 
 ---
 ## 🔐 Security Overview
